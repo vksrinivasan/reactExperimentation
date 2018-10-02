@@ -13,99 +13,47 @@
     <div id="root"></div>
     <script type="text/babel">
 
-    function getGreeting(user) {
-        if (user) {
-            return <h1>Hello, {formatName(user)}!</h1>;
-	}
-	return <h1>Hello, Stranger.</h1>
-    }
+class FlavorForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {value: 'lime'};
 
-    function formatName(user) {
-        return user.firstName + ' ' + user.lastName;
-    }
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
-    function Welcome(props) {
-        return <h1>Hello, {props.name}</h1>;
-    }
+  handleChange(event) {
+    this.setState({value: event.target.value});
+  }
 
-    function App() {
-        return (
-            <div>
-                <Welcome name="Sara" />
-		<Welcome name="cahal" />
-		<Welcome name="Edite" />
-	    </div>
+  handleSubmit(event) {
+    alert('Your favorite flavor is: ' + this.state.value);
+    event.preventDefault();
+  }
 
-	);
-    }
-
-    function Avatar(props) {
-        return (
-            <img className="Avatar"
-	    src={props.user.avatarUrl}
-	    alt={props.user.name}
-	    />
-	);
-    }
-
-    function UserInfo(props) {
-	return (
-	    <div className="UserInfo">
-	        <Avatar user={props.user} />
-		<div className="UserInfo-name">
-			{props.user.name}
-		</div>
-	    </div>
-	);
-    }
-
-    function Comment(props) {
-    	return (
-		<div className="Comment">
-			<UserInfo user={props.author} />
-			<div className="Comment-text">
-				{props.txt}
-			</div>
-
-		</div>
-	);
-    }
-
-    const user = {
-        firstName: 'Vyas',
-	lastName: 'Srinivasan',
-	name: 'Vyas Srinivasan'
-    };
-
-    const info = {
-	author: {
-		avatarUrl: 'https://en.wikipedia.org/wiki/Portable_Network_Graphics#/media/File:PNG_transparency_demonstration_1.png',
-		name: 'Vyas is awesome!'
-	},
-	txt: 'what is going on'
-    };
-
-
-
-    function tick() {
-        const element = (
-            <div>
-                <h1>Hello, world!</h1>
-		<h2>It is {new Date().toLocaleTimeString()}.</h2>
-		<h3>{Welcome(user)}</h3>
-	    </div>
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Pick your favorite flavor:
+          <select value={this.state.value} onChange={this.handleChange}>
+            <option value="grapefruit">Grapefruit</option>
+            <option value="lime">Lime</option>
+            <option value="coconut">Coconut</option>
+            <option value="mango">Mango</option>
+          </select>
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
+    );
+  }
+}
+	
+	ReactDOM.render(
+		<FlavorForm />,
+		document.getElementById('root')
 	);
 
-	const element1 = <Welcome name="Sara" />;
-
-      ReactDOM.render(
-	Comment(info),
-        document.getElementById('root')
-      );
-
-    }
-
-      setInterval(tick,1000);
 
     </script>
     <!--
